@@ -3,6 +3,7 @@
 
 const CENSUS_BASE = 'https://api.census.gov/data/2022/acs/acs5'
 const FCC_BASE = 'https://geo.fcc.gov/api/census/block/find'
+const CENSUS_GEOCODER = 'https://geocoding.geo.census.gov/geocoder/geographies/coordinates'
 
 // ACS variable codes
 const VARIABLES = [
@@ -12,64 +13,109 @@ const VARIABLES = [
   'B25003_001E', // Total housing tenure
   'B25003_002E', // Owner occupied
   'B25003_003E', // Renter occupied
-  'B15003_001E', // Total education (25+)
-  'B15003_022E', // Bachelor's
-  'B15003_023E', // Master's
-  'B15003_024E', // Professional
-  'B15003_025E', // Doctorate
+  'B25010_001E', // Average household size
+  // Age brackets: Under 25
+  'B01001_003E', // Male under 5
+  'B01001_004E', // Male 5-9
+  'B01001_005E', // Male 10-14
+  'B01001_006E', // Male 15-17
   'B01001_007E', // Male 18-19
   'B01001_008E', // Male 20
   'B01001_009E', // Male 21
   'B01001_010E', // Male 22-24
-  'B01001_011E', // Male 25-29
-  'B01001_012E', // Male 30-34
-  'B01001_013E', // Male 35-39
-  'B01001_014E', // Male 40-44
+  'B01001_027E', // Female under 5
+  'B01001_028E', // Female 5-9
+  'B01001_029E', // Female 10-14
+  'B01001_030E', // Female 15-17
   'B01001_031E', // Female 18-19
   'B01001_032E', // Female 20
   'B01001_033E', // Female 21
   'B01001_034E', // Female 22-24
+  // Age brackets: 25-34
+  'B01001_011E', // Male 25-29
+  'B01001_012E', // Male 30-34
   'B01001_035E', // Female 25-29
   'B01001_036E', // Female 30-34
+  // Age brackets: 35-44
+  'B01001_013E', // Male 35-39
+  'B01001_014E', // Male 40-44
   'B01001_037E', // Female 35-39
   'B01001_038E', // Female 40-44
-  'B01001_003E', // Male under 5
-  'B01001_004E', // Male 5-9
-  'B01001_027E', // Female under 5
-  'B01001_028E', // Female 5-9
-  'B02001_001E', // Total race
-  'B02001_002E', // White alone
-  'B02001_003E', // Black alone
-  'B02001_005E', // Asian alone
-  'B03001_003E', // Hispanic/Latino
+  // Age brackets: 45-54
+  'B01001_015E', // Male 45-49
+  'B01001_016E', // Male 50-54
+  'B01001_039E', // Female 45-49
+  'B01001_040E', // Female 50-54
+  // Age brackets: 55-64
+  'B01001_017E', // Male 55-59
+  'B01001_018E', // Male 60-61
+  'B01001_019E', // Male 62-64
+  'B01001_041E', // Female 55-59
+  'B01001_042E', // Female 60-61
+  'B01001_043E', // Female 62-64
+  // Age brackets: 65+
+  'B01001_020E', // Male 65-66
+  'B01001_021E', // Male 67-69
+  'B01001_022E', // Male 70-74
+  'B01001_023E', // Male 75-79
+  'B01001_024E', // Male 80-84
+  'B01001_025E', // Male 85+
+  'B01001_044E', // Female 65-66
+  'B01001_045E', // Female 67-69
+  'B01001_046E', // Female 70-74
+  'B01001_047E', // Female 75-79
+  'B01001_048E', // Female 80-84
+  'B01001_049E', // Female 85+
 ].join(',')
 
-// Get FIPS codes (state, county, tract) from lat/lng via FCC API
+// Get FIPS codes from lat/lng via FCC API, with Census Geocoder fallback
 export async function getFIPS(lat, lng) {
-  const url = `${FCC_BASE}?latitude=${lat}&longitude=${lng}&format=json&showall=false`
-  const res = await fetch(url)
-  if (!res.ok) throw new Error('FCC geocoder failed')
-  const data = await res.json()
-  const block = data.Block?.FIPS
-  if (!block) throw new Error('No census block found for this location')
-  return {
-    state: block.substring(0, 2),
-    county: block.substring(2, 5),
-    tract: block.substring(5, 11),
-    blockGroup: block.substring(11, 12),
+  try {
+    const url = `${FCC_BASE}?latitude=${lat}&longitude=${lng}&format=json&showall=false`
+    const res = await fetch(url)
+    if (!res.ok) throw new Error('FCC geocoder failed')
+    const data = await res.json()
+    const block = data.Block?.FIPS
+    if (!block) throw new Error('No census block found')
+    return {
+      state: block.substring(0, 2),
+      county: block.substring(2, 5),
+      tract: block.substring(5, 11),
+    }
+  } catch {
+    // Fallback: Census Geocoder API
+    const url = `${CENSUS_GEOCODER}?x=${lng}&y=${lat}&benchmark=Public_AR_Current&vintage=Current_Current&format=json`
+    const res = await fetch(url)
+    if (!res.ok) throw new Error('Both geocoders failed')
+    const data = await res.json()
+    const geo = data.result?.geographies?.['Census Tracts']?.[0]
+    if (!geo) throw new Error('No census tract from Census Geocoder')
+    return {
+      state: geo.STATE,
+      county: geo.COUNTY,
+      tract: geo.TRACT,
+    }
   }
 }
 
 // Sample points within radius to find all census tracts
 function samplePoints(lat, lng, radiusMiles) {
   const points = [{ lat, lng }]
-  const radiusDeg = radiusMiles * 0.0145 // rough miles to degrees
+  const radiusDeg = radiusMiles * 0.0145
+  // 8 points on the circle + 4 at half radius
   for (let i = 0; i < 8; i++) {
     const angle = (i * Math.PI) / 4
+    const cosLat = Math.cos(lat * Math.PI / 180)
     points.push({
       lat: lat + radiusDeg * Math.cos(angle),
-      lng: lng + radiusDeg * Math.sin(angle) / Math.cos(lat * Math.PI / 180),
+      lng: lng + radiusDeg * Math.sin(angle) / cosLat,
     })
+    if (i < 4) {
+      points.push({
+        lat: lat + (radiusDeg * 0.5) * Math.cos(angle),
+        lng: lng + (radiusDeg * 0.5) * Math.sin(angle) / cosLat,
+      })
+    }
   }
   return points
 }
@@ -90,16 +136,12 @@ async function getTractsInRadius(lat, lng, radiusMiles) {
   return Array.from(tracts.values())
 }
 
-// Parse ACS response into usable object
 function parseACSRow(header, row) {
   const obj = {}
-  header.forEach((key, i) => {
-    obj[key] = row[i]
-  })
+  header.forEach((key, i) => { obj[key] = row[i] })
   return obj
 }
 
-// Query ACS data for a specific tract
 async function queryACS(state, county, tract) {
   const url = `${CENSUS_BASE}?get=${VARIABLES}&for=tract:${tract}&in=state:${state}&in=county:${county}`
   const res = await fetch(url)
@@ -136,84 +178,101 @@ function aggregateDemographics(rows) {
   let totalPop = 0
   let weightedIncome = 0
   let weightedAge = 0
+  let weightedHouseholdSize = 0
   let totalTenure = 0
   let ownerOcc = 0
   let renterOcc = 0
-  let totalEdu = 0
-  let collegePlus = 0
+
+  // Age buckets
+  let under25 = 0
   let age25to34 = 0
   let age35to44 = 0
+  let age45to54 = 0
+  let age55to64 = 0
+  let age65plus = 0
   let age18to44 = 0
-  let under10 = 0
-  let totalRace = 0
-  let white = 0
-  let black = 0
-  let asian = 0
-  let hispanic = 0
 
   for (const row of rows) {
     const pop = safeNum(row.B01003_001E)
     totalPop += pop
     weightedIncome += safeNum(row.B19013_001E) * pop
     weightedAge += safeNum(row.B01002_001E) * pop
+    weightedHouseholdSize += safeNum(row.B25010_001E) * pop
     totalTenure += safeNum(row.B25003_001E)
     ownerOcc += safeNum(row.B25003_002E)
     renterOcc += safeNum(row.B25003_003E)
-    totalEdu += safeNum(row.B15003_001E)
-    collegePlus += safeNum(row.B15003_022E) + safeNum(row.B15003_023E) +
-      safeNum(row.B15003_024E) + safeNum(row.B15003_025E)
 
-    // Age 25-34 (male + female)
-    age25to34 += safeNum(row.B01001_011E) + safeNum(row.B01001_012E) +
-      safeNum(row.B01001_035E) + safeNum(row.B01001_036E)
-    // Age 35-44
-    age35to44 += safeNum(row.B01001_013E) + safeNum(row.B01001_014E) +
-      safeNum(row.B01001_037E) + safeNum(row.B01001_038E)
-    // Age 18-44 (all young adult brackets)
-    age18to44 += safeNum(row.B01001_007E) + safeNum(row.B01001_008E) +
+    // Under 25 (all brackets under 25)
+    under25 +=
+      safeNum(row.B01001_003E) + safeNum(row.B01001_004E) + safeNum(row.B01001_005E) +
+      safeNum(row.B01001_006E) + safeNum(row.B01001_007E) + safeNum(row.B01001_008E) +
       safeNum(row.B01001_009E) + safeNum(row.B01001_010E) +
-      safeNum(row.B01001_011E) + safeNum(row.B01001_012E) +
-      safeNum(row.B01001_013E) + safeNum(row.B01001_014E) +
-      safeNum(row.B01001_031E) + safeNum(row.B01001_032E) +
-      safeNum(row.B01001_033E) + safeNum(row.B01001_034E) +
-      safeNum(row.B01001_035E) + safeNum(row.B01001_036E) +
-      safeNum(row.B01001_037E) + safeNum(row.B01001_038E)
-    // Under 10
-    under10 += safeNum(row.B01001_003E) + safeNum(row.B01001_004E) +
-      safeNum(row.B01001_027E) + safeNum(row.B01001_028E)
+      safeNum(row.B01001_027E) + safeNum(row.B01001_028E) + safeNum(row.B01001_029E) +
+      safeNum(row.B01001_030E) + safeNum(row.B01001_031E) + safeNum(row.B01001_032E) +
+      safeNum(row.B01001_033E) + safeNum(row.B01001_034E)
 
-    totalRace += safeNum(row.B02001_001E)
-    white += safeNum(row.B02001_002E)
-    black += safeNum(row.B02001_003E)
-    asian += safeNum(row.B02001_005E)
-    hispanic += safeNum(row.B03001_003E)
+    // 25-34
+    age25to34 +=
+      safeNum(row.B01001_011E) + safeNum(row.B01001_012E) +
+      safeNum(row.B01001_035E) + safeNum(row.B01001_036E)
+
+    // 35-44
+    age35to44 +=
+      safeNum(row.B01001_013E) + safeNum(row.B01001_014E) +
+      safeNum(row.B01001_037E) + safeNum(row.B01001_038E)
+
+    // 45-54
+    age45to54 +=
+      safeNum(row.B01001_015E) + safeNum(row.B01001_016E) +
+      safeNum(row.B01001_039E) + safeNum(row.B01001_040E)
+
+    // 55-64
+    age55to64 +=
+      safeNum(row.B01001_017E) + safeNum(row.B01001_018E) + safeNum(row.B01001_019E) +
+      safeNum(row.B01001_041E) + safeNum(row.B01001_042E) + safeNum(row.B01001_043E)
+
+    // 65+
+    age65plus +=
+      safeNum(row.B01001_020E) + safeNum(row.B01001_021E) + safeNum(row.B01001_022E) +
+      safeNum(row.B01001_023E) + safeNum(row.B01001_024E) + safeNum(row.B01001_025E) +
+      safeNum(row.B01001_044E) + safeNum(row.B01001_045E) + safeNum(row.B01001_046E) +
+      safeNum(row.B01001_047E) + safeNum(row.B01001_048E) + safeNum(row.B01001_049E)
+
+    // 18-44 (for bar/nightlife demand)
+    age18to44 +=
+      safeNum(row.B01001_007E) + safeNum(row.B01001_008E) + safeNum(row.B01001_009E) +
+      safeNum(row.B01001_010E) + safeNum(row.B01001_011E) + safeNum(row.B01001_012E) +
+      safeNum(row.B01001_013E) + safeNum(row.B01001_014E) +
+      safeNum(row.B01001_031E) + safeNum(row.B01001_032E) + safeNum(row.B01001_033E) +
+      safeNum(row.B01001_034E) + safeNum(row.B01001_035E) + safeNum(row.B01001_036E) +
+      safeNum(row.B01001_037E) + safeNum(row.B01001_038E)
   }
 
   const medianIncome = totalPop > 0 ? Math.round(weightedIncome / totalPop) : 0
-  const medianAge = totalPop > 0 ? Math.round(weightedAge / totalPop) : 0
+  const medianAge = totalPop > 0 ? Math.round(weightedAge / totalPop * 10) / 10 : 0
+  const avgHouseholdSize = totalPop > 0 ? Math.round(weightedHouseholdSize / totalPop * 10) / 10 : 0
+  const renterPct = totalTenure > 0 ? renterOcc / totalTenure : 0
+  const ownerPct = totalTenure > 0 ? ownerOcc / totalTenure : 0
 
-  // Estimate pop density (NYC avg tract ~ 0.04 sq mi)
-  const estAreaSqMi = rows.length * 0.04
-  const popDensity = estAreaSqMi > 0 ? Math.round(totalPop / estAreaSqMi) : 0
+  // Age distribution for chart
+  const ageDistribution = [
+    { label: '<25', count: under25 },
+    { label: '25-34', count: age25to34 },
+    { label: '35-44', count: age35to44 },
+    { label: '45-54', count: age45to54 },
+    { label: '55-64', count: age55to64 },
+    { label: '65+', count: age65plus },
+  ]
 
   return {
     totalPopulation: totalPop,
     medianIncome,
     medianAge,
-    popDensity,
-    renterPct: totalTenure > 0 ? renterOcc / totalTenure : 0,
-    ownerPct: totalTenure > 0 ? ownerOcc / totalTenure : 0,
-    collegePct: totalEdu > 0 ? collegePlus / totalEdu : 0,
-    youngProfPct: totalPop > 0 ? (age25to34 + age35to44) / totalPop : 0,
-    pct25to34: totalPop > 0 ? age25to34 / totalPop : 0,
-    pct35to44: totalPop > 0 ? age35to44 / totalPop : 0,
+    avgHouseholdSize,
+    renterPct,
+    ownerPct,
     pct18to44: totalPop > 0 ? age18to44 / totalPop : 0,
-    under10Pct: totalPop > 0 ? under10 / totalPop : 0,
-    whitePct: totalRace > 0 ? white / totalRace : 0,
-    blackPct: totalRace > 0 ? black / totalRace : 0,
-    asianPct: totalRace > 0 ? asian / totalRace : 0,
-    hispanicPct: totalRace > 0 ? hispanic / totalRace : 0,
+    ageDistribution,
     tractCount: rows.length,
-    dominantAge: age25to34 > age35to44 ? '25-34' : '35-44',
   }
 }
