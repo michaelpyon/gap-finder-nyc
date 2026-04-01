@@ -12,6 +12,7 @@
   "dependencies": {
     "@fontsource-variable/jetbrains-mono": "^5.2.8",
     "@fontsource/inter": "^5.2.8",
+    "@fontsource/manrope": "^5.2.8",
     "@tailwindcss/vite": "^4.2.2",
     "mapbox-gl": "^3.20.0",
     "motion": "^12.38.0",
