@@ -77,7 +77,7 @@ export default function ReportHeader({ neighborhood, lat, lng, radius, totalBusi
 
       {/* Info */}
       <div className="flex-1">
-        <h1 className="text-2xl font-bold text-text tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-bold text-text tracking-tight">
           {neighborhood}
         </h1>
         <p className="text-xs text-muted font-mono mt-1">

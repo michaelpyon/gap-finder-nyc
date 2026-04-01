@@ -24,7 +24,7 @@ export default function GapRanking({ gaps, onViewOnMap }) {
   return (
     <section>
       <div className="flex items-center justify-between mb-3">
-        <h2 className="text-xs font-semibold text-muted uppercase tracking-wider">
+        <h2 className="text-sm font-bold text-text uppercase tracking-wider">
           Top Gaps (Ranked by Opportunity)
         </h2>
         <span className="text-xs text-muted font-mono">{gaps.length} underserved</span>

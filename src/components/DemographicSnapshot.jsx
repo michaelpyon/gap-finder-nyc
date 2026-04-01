@@ -12,7 +12,7 @@ export default function DemographicSnapshot({ demographics }) {
 
   return (
     <section>
-      <h2 className="text-xs font-semibold text-muted uppercase tracking-wider mb-3">
+      <h2 className="text-sm font-bold text-text uppercase tracking-wider mb-3">
         Demographic Snapshot
       </h2>
 

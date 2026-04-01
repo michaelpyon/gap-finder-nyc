@@ -20,7 +20,7 @@ export default function CategoryBreakdown({ gaps }) {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center justify-between w-full text-left mb-3"
       >
-        <h2 className="text-xs font-semibold text-muted uppercase tracking-wider">
+        <h2 className="text-sm font-bold text-text uppercase tracking-wider">
           Full Category Breakdown
         </h2>
         <div className="flex items-center gap-2">

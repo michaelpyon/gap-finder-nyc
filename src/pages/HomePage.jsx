@@ -41,7 +41,7 @@ export default function HomePage() {
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10">
             <button
               onClick={handleAnalyze}
-              className="px-6 py-3 bg-accent text-bg font-semibold text-sm rounded-full
+              className="px-6 py-3 bg-accent text-bg font-semibold text-sm rounded-xl
                 shadow-lg shadow-accent/25 hover:shadow-accent/40
                 hover:scale-[1.02] active:scale-[0.98]
                 transition-all duration-150"
