@@ -1,19 +1,22 @@
 import { motion, AnimatePresence } from 'motion/react'
 import { CATEGORIES } from '../data/benchmarks'
 
+const cardVariants = {
+  hidden: { opacity: 0, x: 30, scale: 0.97 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: { type: 'spring', stiffness: 350, damping: 28, mass: 0.6 },
+  },
+}
+
 export default function GapCard({ gap, expanded, onToggle, index }) {
   const catMeta = CATEGORIES[gap.category] || { label: gap.category, color: '#6b7280' }
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: 30 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{
-        delay: index * 0.05,
-        type: 'spring',
-        duration: 0.3,
-        bounce: 0,
-      }}
+      variants={cardVariants}
       className="border border-border rounded-lg overflow-hidden bg-surface hover:border-border transition-colors"
     >
       {/* Collapsed header */}
@@ -47,15 +50,17 @@ export default function GapCard({ gap, expanded, onToggle, index }) {
         </div>
 
         {/* Expand indicator */}
-        <svg
-          className={`shrink-0 text-muted transition-transform duration-150 ${expanded ? 'rotate-180' : ''}`}
+        <motion.svg
+          animate={{ rotate: expanded ? 180 : 0 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+          className="shrink-0 text-muted"
           width="12"
           height="12"
           viewBox="0 0 12 12"
           fill="none"
         >
           <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-        </svg>
+        </motion.svg>
       </button>
 
       {/* Expanded detail */}
@@ -65,7 +70,7 @@ export default function GapCard({ gap, expanded, onToggle, index }) {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ type: 'spring', duration: 0.3, bounce: 0 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 35, mass: 0.7 }}
             className="overflow-hidden"
           >
             <div className="px-4 pb-4 pt-1 border-t border-border space-y-4">

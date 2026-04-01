@@ -2,6 +2,16 @@ import { motion } from 'motion/react'
 import GapCard from './GapCard'
 import DemographicChips from './DemographicChips'
 
+const listVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.06,
+      delayChildren: 0.15,
+    },
+  },
+}
+
 export default function ResultsPanel({
   neighborhood,
   demographics,
@@ -12,9 +22,9 @@ export default function ResultsPanel({
 }) {
   return (
     <motion.div
-      initial={{ x: 40, opacity: 0 }}
+      initial={{ x: 400, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
-      transition={{ type: 'spring', duration: 0.3, bounce: 0 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 30, mass: 0.8 }}
       className="h-full overflow-y-auto"
     >
       <div className="p-5 space-y-5">
@@ -42,9 +52,14 @@ export default function ResultsPanel({
           </span>
         </div>
 
-        {/* Gap cards */}
+        {/* Gap cards — staggered */}
         {gaps.length > 0 ? (
-          <div className="space-y-2">
+          <motion.div
+            variants={listVariants}
+            initial="hidden"
+            animate="visible"
+            className="space-y-2"
+          >
             {gaps.map((gap, i) => (
               <GapCard
                 key={gap.id}
@@ -54,7 +69,7 @@ export default function ResultsPanel({
                 onToggle={() => onExpandGap(expandedGap === gap.id ? null : gap.id)}
               />
             ))}
-          </div>
+          </motion.div>
         ) : (
           <div className="text-center py-12">
             <p className="text-muted text-sm">
