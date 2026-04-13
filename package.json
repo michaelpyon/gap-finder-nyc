@@ -12,11 +12,13 @@
   "dependencies": {
     "@fontsource-variable/jetbrains-mono": "^5.2.8",
     "@fontsource/inter": "^5.2.8",
+    "@fontsource/manrope": "^5.2.8",
     "@tailwindcss/vite": "^4.2.2",
     "mapbox-gl": "^3.20.0",
     "motion": "^12.38.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "react-router-dom": "^7.13.2",
     "tailwindcss": "^4.2.2"
   },
   "devDependencies": {

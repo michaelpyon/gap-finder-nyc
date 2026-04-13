@@ -1,0 +1,732 @@
+<!-- Design System -->
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Intelligence Layer | NYC Gap Analysis</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline": "#75777d",
+              "on-secondary-fixed-variant": "#005236",
+              "secondary-container": "#6cf8bb",
+              "background": "#f7f9fb",
+              "surface-container-highest": "#e0e3e5",
+              "primary-container": "#1e293b",
+              "tertiary": "#330002",
+              "surface-dim": "#d8dadc",
+              "surface-bright": "#f7f9fb",
+              "secondary-fixed": "#6ffbbe",
+              "on-tertiary-fixed-variant": "#930013",
+              "outline-variant": "#c5c6cd",
+              "inverse-surface": "#2d3133",
+              "on-secondary": "#ffffff",
+              "on-tertiary-container": "#ff5250",
+              "surface-container": "#eceef0",
+              "primary-fixed": "#d8e3fb",
+              "tertiary-fixed-dim": "#ffb3ad",
+              "inverse-primary": "#bcc7de",
+              "on-surface": "#191c1e",
+              "surface-container-low": "#f2f4f6",
+              "on-background": "#191c1e",
+              "secondary-fixed-dim": "#4edea3",
+              "primary": "#091426",
+              "surface-tint": "#545f73",
+              "tertiary-container": "#5a0008",
+              "error-container": "#ffdad6",
+              "on-error-container": "#93000a",
+              "on-surface-variant": "#45474c",
+              "inverse-on-surface": "#eff1f3",
+              "secondary": "#006c49",
+              "surface-container-high": "#e6e8ea",
+              "surface-container-lowest": "#ffffff",
+              "on-tertiary": "#ffffff",
+              "surface": "#f7f9fb",
+              "tertiary-fixed": "#ffdad7",
+              "on-tertiary-fixed": "#410004",
+              "on-primary": "#ffffff",
+              "error": "#ba1a1a",
+              "on-primary-fixed-variant": "#3c475a",
+              "on-primary-container": "#8590a6",
+              "on-primary-fixed": "#111c2d",
+              "on-secondary-container": "#00714d",
+              "on-error": "#ffffff",
+              "on-secondary-fixed": "#002113",
+              "primary-fixed-dim": "#bcc7de",
+              "surface-variant": "#e0e3e5"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #c5c6cd; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background font-body text-on-background overflow-hidden">
+<!-- Top Navigation -->
+<header class="fixed top-0 left-0 w-full flex justify-between items-center px-8 h-16 bg-slate-900/85 backdrop-blur-md z-50 shadow-[0_12px_40px_rgba(17,28,45,0.06)]">
+<div class="flex items-center gap-12">
+<div class="text-xl font-bold tracking-widest text-slate-50 font-headline">THE INTELLIGENCE LAYER</div>
+<nav class="hidden md:flex gap-8 items-center text-sm font-manrope font-bold tracking-tight">
+<a class="text-slate-400 hover:text-slate-200 transition-colors" href="#">Location Search</a>
+<a class="text-slate-50 border-b-2 border-slate-50 pb-1" href="#">Analysis</a>
+<a class="text-slate-400 hover:text-slate-200 transition-colors" href="#">Side-by-Side Comparison</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-400 hover:bg-slate-800/50 transition-all rounded-full">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-slate-400 hover:bg-slate-800/50 transition-all rounded-full">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-primary-fixed ml-2">
+<img alt="Investment Analyst Profile" class="w-full h-full object-cover" data-alt="Close up of a professional investment analyst in a crisp white shirt against a soft office background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDU6v5MoqGImiSxDqHQud68rj-IR-9aIw2fZrV_Y3lHy_H2aL1swy70dQRodwsePelBL1_0aAjp4eALa2wEyoyyuS0I9tImRTrAm5F2wMF9TJSN2lM-eIDfnZM2qeXKHTHfFANnE7kJGDnVzpZ9cq1tbb2P81I01IVSbIuIt0rHSJLVmbmoWDUs0ZKWV2DugiPnRL2GYE87RIUzjhG2VG4EdH7lOulaielhYpBG5OnogCAi39STR6SWVpIXpUhiN8zUtxh2OQ7MAU4"/>
+</div>
+</div>
+</header>
+<!-- Side Navigation (Left) -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-80 flex flex-col z-40 bg-slate-50/95 backdrop-blur-xl shadow-2xl border-r border-outline-variant/15">
+<div class="p-6">
+<div class="flex items-center gap-3 mb-8">
+<div class="p-2 bg-primary text-on-primary rounded-lg">
+<span class="material-symbols-outlined">map</span>
+</div>
+<div>
+<h2 class="font-headline font-extrabold text-slate-900 text-lg leading-tight">Cartographic Ledger</h2>
+<p class="text-xs text-on-surface-variant uppercase tracking-wider">Precision Gap Analysis</p>
+</div>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 bg-white text-slate-900 border-l-4 border-emerald-600 font-medium transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span>Map Overview</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-100 font-medium hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span>Intelligence Report</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-100 font-medium hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span>Gap Ranking</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-100 font-medium hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="compare_arrows">compare_arrows</span>
+<span>Comparison</span>
+</a>
+</nav>
+<button class="w-full mt-8 py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-md shadow-lg flex items-center justify-center gap-2 font-bold tracking-tight scale-98 active:opacity-80 transition-transform">
+<span class="material-symbols-outlined">add_location_alt</span>
+                Drop Pin Analysis
+            </button>
+</div>
+<div class="mt-auto p-6 space-y-1">
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-100 text-sm" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+                Documentation
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:bg-slate-100 text-sm" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+                Support
+            </a>
+</div>
+</aside>
+<!-- Main Canvas (Mapbox Foundation) -->
+<main class="fixed inset-0 pt-16 pl-80">
+<div class="relative w-full h-full bg-surface-container overflow-hidden">
+<!-- Map Layer -->
+<img class="w-full h-full object-cover" data-alt="Minimalist clean light-colored map of Brooklyn street grid showing Bedford Ave with a distinctive digital pin marker" data-location="Bedford Ave, Brooklyn, NYC" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_gMi98-LXJWpI6uRHZIt_HxgvooqizM2GHeAKrmJTI5YLBHu7RiaIP9AN_N-E2JGAXmWJFvfKB-xDKsvwzMOHQh9uvhCp2Gj_krz_dC-gPlsGPXUL_dn_lbLRPhqU2ZGRxB018TFjPul8MvvyJRp3dcr-ZHwuoxqk3geByP0czaNtYKfCBBAZSEIUbk2bs-POq1x5eC0wTX7rMGvjToKBUZPcL43dyTLCOV_jcofmf_EJ7ZmCTR2yt0apd8QFzNTCV6j8XU6JHAA"/>
+<!-- Map Overlay UI -->
+<div class="absolute inset-0 pointer-events-none">
+<!-- Map Controls (Top Right) -->
+<div class="absolute top-6 right-6 flex flex-col gap-2 pointer-events-auto">
+<div class="bg-surface-container-lowest/85 backdrop-blur-md shadow-xl rounded-md flex flex-col p-1">
+<button class="p-2 hover:bg-surface-container-high transition-colors text-on-surface">
+<span class="material-symbols-outlined">add</span>
+</button>
+<div class="h-px bg-outline-variant/20 mx-2"></div>
+<button class="p-2 hover:bg-surface-container-high transition-colors text-on-surface">
+<span class="material-symbols-outlined">remove</span>
+</button>
+</div>
+<button class="bg-surface-container-lowest/85 backdrop-blur-md shadow-xl rounded-md p-2 hover:bg-surface-container-high transition-colors text-on-surface pointer-events-auto">
+<span class="material-symbols-outlined">layers</span>
+</button>
+</div>
+<!-- Floating Analysis Sidebar (Right) -->
+<div class="absolute top-6 bottom-6 right-20 w-96 pointer-events-auto flex flex-col gap-6">
+<!-- Location Metadata Card -->
+<div class="bg-surface-container-lowest/95 backdrop-blur-xl shadow-[0_12px_40px_rgba(17,28,45,0.06)] rounded-md p-6">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h1 class="font-headline font-extrabold text-2xl text-on-primary-fixed">Bedford Ave Node</h1>
+<p class="text-on-surface-variant font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">location_on</span>
+                                    Williamsburg, Brooklyn
+                                </p>
+</div>
+<span class="bg-secondary/10 text-secondary px-2 py-1 rounded-sm text-[10px] font-bold uppercase tracking-wider">Opportunity High</span>
+</div>
+<!-- Bento Grid Stats -->
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-4 rounded-md">
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-semibold mb-1">Population</p>
+<p class="text-xl font-headline font-bold text-on-primary-fixed">142,308</p>
+<p class="text-[10px] text-secondary font-medium">+2.4% YoY</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-md">
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-semibold mb-1">Median Income</p>
+<p class="text-xl font-headline font-bold text-on-primary-fixed">$104.2k</p>
+<p class="text-[10px] text-on-surface-variant font-medium">92nd Percentile</p>
+</div>
+</div>
+<!-- Demographic Charts (Placeholder Concept) -->
+<div class="mt-6">
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-3">Age Distribution</p>
+<div class="flex items-end gap-1 h-12 w-full">
+<div class="w-full bg-primary-container h-[40%] rounded-t-sm"></div>
+<div class="w-full bg-primary-container h-[65%] rounded-t-sm"></div>
+<div class="w-full bg-primary h-[100%] rounded-t-sm"></div>
+<div class="w-full bg-primary-container h-[85%] rounded-t-sm"></div>
+<div class="w-full bg-primary-container h-[30%] rounded-t-sm"></div>
+<div class="w-full bg-primary-container h-[15%] rounded-t-sm"></div>
+</div>
+</div>
+</div>
+<!-- Gap Ranking Ledger -->
+<div class="flex-1 bg-surface-container-lowest/95 backdrop-blur-xl shadow-[0_12px_40px_rgba(17,28,45,0.06)] rounded-md flex flex-col overflow-hidden">
+<div class="p-6 bg-surface-container-low/50">
+<h3 class="font-headline font-bold text-on-primary-fixed">Intelligence Gap Ranking</h3>
+<p class="text-xs text-on-surface-variant">Top underserved commercial sectors</p>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6">
+<!-- Underserved Item -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<div>
+<h4 class="text-sm font-bold text-on-primary-fixed">Coffee shops</h4>
+<p class="text-[10px] text-on-surface-variant">2 existing / 6 supported</p>
+</div>
+<span class="text-secondary text-xs font-bold">67% UNDERSERVED</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-1/3"></div>
+</div>
+</div>
+<!-- Underserved Item -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<div>
+<h4 class="text-sm font-bold text-on-primary-fixed">Specialty Grocery</h4>
+<p class="text-[10px] text-on-surface-variant">1 existing / 4 supported</p>
+</div>
+<span class="text-secondary text-xs font-bold">75% UNDERSERVED</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[25%]"></div>
+</div>
+</div>
+<!-- Saturated Item -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<div>
+<h4 class="text-sm font-bold text-on-primary-fixed">Yoga studios</h4>
+<p class="text-[10px] text-on-surface-variant">12 existing / 5 supported</p>
+</div>
+<span class="text-on-tertiary-container text-xs font-bold">SATURATED</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-on-tertiary-container w-full"></div>
+</div>
+</div>
+<!-- Underserved Item -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<div>
+<h4 class="text-sm font-bold text-on-primary-fixed">Boutique Fitness</h4>
+<p class="text-[10px] text-on-surface-variant">4 existing / 8 supported</p>
+</div>
+<span class="text-secondary text-xs font-bold">50% UNDERSERVED</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-1/2"></div>
+</div>
+</div>
+<!-- Saturated Item -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<div>
+<h4 class="text-sm font-bold text-on-primary-fixed">Nail Salons</h4>
+<p class="text-[10px] text-on-surface-variant">18 existing / 10 supported</p>
+</div>
+<span class="text-on-tertiary-container text-xs font-bold">SATURATED</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-on-tertiary-container w-full"></div>
+</div>
+</div>
+</div>
+<!-- Footer CTA -->
+<div class="p-4 border-t border-outline-variant/10">
+<button class="w-full py-2 bg-surface-container-high text-on-surface text-sm font-bold rounded-md hover:bg-surface-container-highest transition-colors">
+                                Export Full Intelligence Report
+                            </button>
+</div>
+</div>
+</div>
+<!-- Map Legend / Status (Bottom Left) -->
+<div class="absolute bottom-6 left-6 pointer-events-auto">
+<div class="bg-surface-container-lowest/85 backdrop-blur-md shadow-xl rounded-md p-4 flex gap-6 items-center">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-secondary"></div>
+<span class="text-xs font-bold text-on-surface-variant">High Opportunity</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-on-tertiary-container"></div>
+<span class="text-xs font-bold text-on-surface-variant">Saturated Market</span>
+</div>
+<div class="h-4 w-px bg-outline-variant/30"></div>
+<div class="flex items-center gap-2 text-[10px] text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-sm">update</span>
+                            Data Refresh: Today 04:00 AM
+                        </div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>
+
+<!-- Location Intelligence Dashboard -->
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Intelligence Layer | NYC Gap Analysis</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline": "#75777d",
+              "on-secondary-fixed-variant": "#005236",
+              "secondary-container": "#6cf8bb",
+              "background": "#f7f9fb",
+              "surface-container-highest": "#e0e3e5",
+              "primary-container": "#1e293b",
+              "tertiary": "#330002",
+              "surface-dim": "#d8dadc",
+              "surface-bright": "#f7f9fb",
+              "secondary-fixed": "#6ffbbe",
+              "on-tertiary-fixed-variant": "#930013",
+              "outline-variant": "#c5c6cd",
+              "inverse-surface": "#2d3133",
+              "on-secondary": "#ffffff",
+              "on-tertiary-container": "#ff5250",
+              "surface-container": "#eceef0",
+              "primary-fixed": "#d8e3fb",
+              "tertiary-fixed-dim": "#ffb3ad",
+              "inverse-primary": "#bcc7de",
+              "on-surface": "#191c1e",
+              "surface-container-low": "#f2f4f6",
+              "on-background": "#191c1e",
+              "secondary-fixed-dim": "#4edea3",
+              "primary": "#091426",
+              "surface-tint": "#545f73",
+              "tertiary-container": "#5a0008",
+              "error-container": "#ffdad6",
+              "on-error-container": "#93000a",
+              "on-surface-variant": "#45474c",
+              "inverse-on-surface": "#eff1f3",
+              "secondary": "#006c49",
+              "surface-container-high": "#e6e8ea",
+              "surface-container-lowest": "#ffffff",
+              "on-tertiary": "#ffffff",
+              "surface": "#f7f9fb",
+              "tertiary-fixed": "#ffdad7",
+              "on-tertiary-fixed": "#410004",
+              "on-primary": "#ffffff",
+              "error": "#ba1a1a",
+              "on-primary-fixed-variant": "#3c475a",
+              "on-primary-container": "#8590a6",
+              "on-primary-fixed": "#111c2d",
+              "on-secondary-container": "#00714d",
+              "on-error": "#ffffff",
+              "on-secondary-fixed": "#002113",
+              "primary-fixed-dim": "#bcc7de",
+              "surface-variant": "#e0e3e5"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-panel {
+        backdrop-filter: blur(12px);
+      }
+      .gradient-cta {
+        background: linear-gradient(135deg, #091426 0%, #1e293b 100%);
+      }
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+    </style>
+</head>
+<body class="bg-background font-body text-on-surface antialiased">
+<!-- Top Navigation -->
+<header class="fixed top-0 left-0 w-full flex justify-between items-center px-8 h-16 bg-slate-900/85 backdrop-blur-md dark:bg-slate-950/85 text-slate-50 font-manrope font-bold tracking-tight shadow-[0_12px_40px_rgba(17,28,45,0.06)] z-50">
+<div class="flex items-center gap-8">
+<div class="text-xl font-bold tracking-widest text-slate-50">The Intelligence Layer</div>
+<nav class="hidden md:flex items-center gap-6 text-sm">
+<a class="text-slate-400 hover:text-slate-200 transition-colors" href="#">Location Search</a>
+<a class="text-slate-400 hover:text-slate-200 transition-colors" href="#">Analysis</a>
+<a class="text-slate-50 border-b-2 border-slate-50 pb-1" href="#">Side-by-Side Comparison</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-slate-400 hover:bg-slate-800/50 p-2 rounded-full transition-all">notifications</button>
+<button class="material-symbols-outlined text-slate-400 hover:bg-slate-800/50 p-2 rounded-full transition-all">settings</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden ml-2">
+<img alt="Investment Analyst Profile" data-alt="Professional headshot of a financial analyst in a modern office setting with soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKDT285L0Zwhm_JwO60-XVvj9FYWR1lESeYfspdm70SbIugw8I0e1efQVQay_Ra8xaSCZngsibZBimBr9wm8ZcEjhnzHggbfKAlPXPKSSGo_NYTqx-F_88ZnMjAoxO9FFO6RzZwVyVJ-60LE5fzwshIVXiWFzfc17QQVeDOdsoKTb0nABW-qVcksFIeamvngyZnQO5TXKwWfao7_gE03CpTjDtOAQpeavKDyPSt_zkLMirnpGJdudEW0U2iTgsJv3Z6R5c6eTCLas"/>
+</div>
+</div>
+</header>
+<!-- Side Navigation -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-4rem)] flex flex-col z-40 bg-slate-50/95 backdrop-blur-xl dark:bg-slate-900/95 text-slate-900 dark:text-slate-50 font-inter text-sm font-medium w-80 shadow-2xl">
+<div class="p-6">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white">layers</span>
+</div>
+<div>
+<div class="font-manrope font-extrabold text-slate-900 dark:text-slate-50">Cartographic Ledger</div>
+<div class="text-[10px] text-on-surface-variant uppercase tracking-widest">Precision Gap Analysis</div>
+</div>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span>Map Overview</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span>Intelligence Report</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span>Gap Ranking</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 border-l-4 border-emerald-600 hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="compare_arrows">compare_arrows</span>
+<span>Comparison</span>
+</a>
+</nav>
+<div class="mt-12">
+<button class="w-full gradient-cta text-white py-3 px-4 rounded-md font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-primary/20 active:opacity-80 transition-transform scale-98">
+<span class="material-symbols-outlined text-sm">add_location_alt</span>
+                    Drop Pin Analysis
+                </button>
+</div>
+</div>
+<div class="mt-auto p-6 space-y-1 border-t border-outline-variant/10">
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="menu_book">menu_book</span>
+<span>Documentation</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="help">help</span>
+<span>Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-80 pt-16 min-h-screen">
+<!-- Sub-Header: Comparison Context -->
+<div class="bg-surface-container-low px-10 py-6 border-b border-outline-variant/10 flex justify-between items-end">
+<div>
+<div class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-1">Comparative Asset Intelligence</div>
+<h1 class="text-3xl font-headline font-extrabold text-on-primary-fixed leading-tight">Side-by-Side Asset Gap Analysis</h1>
+</div>
+<div class="flex gap-2">
+<button class="bg-surface-container-lowest text-on-surface-variant px-4 py-2 text-xs font-bold border border-outline-variant/20 hover:bg-surface-bright transition-colors rounded-md">EXPORT DATA (PDF)</button>
+<button class="bg-surface-container-lowest text-on-surface-variant px-4 py-2 text-xs font-bold border border-outline-variant/20 hover:bg-surface-bright transition-colors rounded-md">SHARE NODE</button>
+</div>
+</div>
+<!-- Split Screen View -->
+<div class="p-10">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Location 1: Williamsburg -->
+<div class="space-y-6">
+<div class="bg-surface-container-lowest rounded-lg p-1 shadow-[0_12px_40px_rgba(17,28,45,0.06)]">
+<div class="h-48 rounded-md mb-4 overflow-hidden relative">
+<img class="w-full h-full object-cover grayscale opacity-50" data-alt="Aerial satellite map view of Williamsburg Brooklyn waterfront showing urban density and street grid" data-location="Williamsburg, NY" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpVWgqv8Wo8gXSzS5C-cCFFYbdUDRR-vKxH7O2_I7GhrZOYOq-0-Mj3XrwNOIV7_q8PV6f6qQuV79bL3Wre2-KiSRMj0svg1oRYfl_nhahhFm-jfd13UHoGmrGfTfgQIPyLOCtZFuJtlb24Wp_Fk-09XNpsdRAW8zRdboBL4CjcGQnsezQA2LAiwhhu0uSLBO52DQskli7BOY7EH7UJJgieXOG5Dn0lgvNJ9OCdLHZtsrAYxk_esjLo9TpdSbazr5M5G3G1mU3R10"/>
+<div class="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
+<div class="absolute bottom-4 left-4">
+<span class="bg-secondary px-3 py-1 text-[10px] font-bold text-white tracking-widest rounded-sm">UNDERSERVED</span>
+</div>
+</div>
+<div class="px-5 pb-6">
+<h2 class="font-headline text-2xl font-bold text-on-primary-fixed mb-1">Williamsburg</h2>
+<p class="text-xs text-on-surface-variant mb-6">Kings County | North Waterfront Zone</p>
+<!-- Key Metrics -->
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<span class="text-[10px] text-on-surface-variant font-bold uppercase">Total Businesses</span>
+<span class="font-manrope font-bold text-lg text-on-primary-fixed">1,402</span>
+</div>
+<div class="flex justify-between items-end">
+<span class="text-[10px] text-on-surface-variant font-bold uppercase">Saturation Index</span>
+<span class="font-manrope font-bold text-lg text-secondary">42.8%</span>
+</div>
+<div class="flex justify-between items-end">
+<span class="text-[10px] text-on-surface-variant font-bold uppercase">Avg HH Income</span>
+<span class="font-manrope font-bold text-lg text-on-primary-fixed">$148,200</span>
+</div>
+<div class="flex justify-between items-end">
+<span class="text-[10px] text-on-surface-variant font-bold uppercase">Pedestrian Traffic</span>
+<span class="font-manrope font-bold text-lg text-on-primary-fixed">High (8/10)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Category Breakdown Table -->
+<div class="bg-surface-container-low rounded-lg p-6">
+<div class="text-[10px] font-bold text-on-surface-variant uppercase mb-4 tracking-widest">Sector Concentration</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center text-xs">
+<span class="text-on-surface font-medium">Fitness &amp; Wellness</span>
+<div class="flex items-center gap-2">
+<div class="w-24 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-[20%]"></div>
+</div>
+<span class="font-bold">20%</span>
+</div>
+</div>
+<div class="flex justify-between items-center text-xs">
+<span class="text-on-surface font-medium">Food &amp; Beverage</span>
+<div class="flex items-center gap-2">
+<div class="w-24 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-tertiary-container h-full w-[85%]"></div>
+</div>
+<span class="font-bold">85%</span>
+</div>
+</div>
+<div class="flex justify-between items-center text-xs">
+<span class="text-on-surface font-medium">Boutique Retail</span>
+<div class="flex items-center gap-2">
+<div class="w-24 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-[35%]"></div>
+</div>
+<span class="font-bold">35%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Location 2: Astoria -->
+<div class="space-y-6">
+<div class="bg-surface-container-lowest rounded-lg p-1 shadow-[0_12px_40px_rgba(17,28,45,0.06)]">
+<div class="h-48 rounded-md mb-4 overflow-hidden relative">
+<img class="w-full h-full object-cover grayscale opacity-50" data-alt="Satellite imagery of Astoria Queens showing dense residential blocks and public transit corridors" data-location="Astoria, NY" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5CFy90f8Db-7oATj7Zleb5PJWyLF218CVfTDo1N2I8BCocjLGbjxqU0JSQVbxwhFppCQimDUwhkCoej6qOEZBKSFH6rvlEE2SxUIzOhyIiFBDKHb1X3C6iXwbOZv_FqxuO77uQo5OtNOyTFnYnAgg0DQSVt-pxaTpsgHZBwqgO-6yBcXYaKdz2cnw5FQnvThoA9JnyvwDLE8CqK1XBoosXYCF_5gq7bdPu6sIW7PGbs-imhzoBAy6acX6GPK66vBgzjpfm1iB2FE"/>
+<div class="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
+<div class="absolute bottom-4 left-4">
+<span class="bg-primary px-3 py-1 text-[10px] font-bold text-white tracking-widest rounded-sm">STABLE</span>
+</div>
+</div>
+<div class="px-5 pb-6">
+<h2 class="font-headline text-2xl font-bold text-on-primary-fixed mb-1">Astoria</h2>
+<p class="text-xs text-on-surface-variant mb-6">Queens County | Steinway District</p>
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<span class="text-[10px] text-on-surface-variant font-bold uppercase">Total Businesses</span>
+<span class="font-manrope font-bold text-lg text-on-primary-fixed">2,110</span>
+</div>
+<div class="flex justify-between items-end">
+<span class="text-[10px] text-on-surface-variant font-bold uppercase">Saturation Index</span>
+<span class="font-manrope font-bold text-lg text-on-primary-fixed">68.2%</span>
+</div>
+<div class="flex justify-between items-end">
+<span class="text-[10px] text-on-surface-variant font-bold uppercase">Avg HH Income</span>
+<span class="font-manrope font-bold text-lg text-on-primary-fixed">$89,400</span>
+</div>
+<div class="flex justify-between items-end">
+<span class="text-[10px] text-on-surface-variant font-bold uppercase">Pedestrian Traffic</span>
+<span class="font-manrope font-bold text-lg text-on-primary-fixed">Moderate (6/10)</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-lg p-6">
+<div class="text-[10px] font-bold text-on-surface-variant uppercase mb-4 tracking-widest">Sector Concentration</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center text-xs">
+<span class="text-on-surface font-medium">Fitness &amp; Wellness</span>
+<div class="flex items-center gap-2">
+<div class="w-24 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-[45%]"></div>
+</div>
+<span class="font-bold">45%</span>
+</div>
+</div>
+<div class="flex justify-between items-center text-xs">
+<span class="text-on-surface font-medium">Food &amp; Beverage</span>
+<div class="flex items-center gap-2">
+<div class="w-24 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-tertiary-container h-full w-[72%]"></div>
+</div>
+<span class="font-bold">72%</span>
+</div>
+</div>
+<div class="flex justify-between items-center text-xs">
+<span class="text-on-surface font-medium">Boutique Retail</span>
+<div class="flex items-center gap-2">
+<div class="w-24 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-[12%]"></div>
+</div>
+<span class="font-bold">12%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Location 3: Lower East Side -->
+<div class="space-y-6">
+<div class="bg-surface-container-lowest rounded-lg p-1 shadow-[0_12px_40px_rgba(17,28,45,0.06)]">
+<div class="h-48 rounded-md mb-4 overflow-hidden relative">
+<img class="w-full h-full object-cover grayscale opacity-50" data-alt="Urban satellite map of Manhattan Lower East Side showing high density tenements and boutique corridors" data-location="Lower East Side, NY" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9nO0xO10KJECHKTdG3QEEYTrIFZOkDHf6OHEMLEsVqkGB6Zlpze5r4kpMRrsV6hVZACcrCyypzqhVXQA9TNVbB4sSv7nv2hC03yvc6-XBMYFdfRPGG_pODmixseEug1BPDoo70kpy6ojWht7_Bt9kGxJlj1ZbFRtJw_PGOH4fr6z20x-X8pLyHVCb9mb-0SaGgV4UQzF9BlR250Gpu4Md2TjABcG_EiP1v2jh7g_oVEk-ay74zf_L6C5rIUqROzvTGJ72t6ik9hU"/>
+<div class="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
+<div class="absolute bottom-4 left-4">
+<span class="bg-tertiary-container px-3 py-1 text-[10px] font-bold text-white tracking-widest rounded-sm">CROWDED</span>
+</div>
+</div>
+<div class="px-5 pb-6">
+<h2 class="font-headline text-2xl font-bold text-on-primary-fixed mb-1">Lower East Side</h2>
+<p class="text-xs text-on-surface-variant mb-6">New York County | Canal St North</p>
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<span class="text-[10px] text-on-surface-variant font-bold uppercase">Total Businesses</span>
+<span class="font-manrope font-bold text-lg text-on-primary-fixed">3,450</span>
+</div>
+<div class="flex justify-between items-end">
+<span class="text-[10px] text-on-surface-variant font-bold uppercase">Saturation Index</span>
+<span class="font-manrope font-bold text-lg text-tertiary-container">91.4%</span>
+</div>
+<div class="flex justify-between items-end">
+<span class="text-[10px] text-on-surface-variant font-bold uppercase">Avg HH Income</span>
+<span class="font-manrope font-bold text-lg text-on-primary-fixed">$112,000</span>
+</div>
+<div class="flex justify-between items-end">
+<span class="text-[10px] text-on-surface-variant font-bold uppercase">Pedestrian Traffic</span>
+<span class="font-manrope font-bold text-lg text-on-primary-fixed">Very High (10/10)</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-lg p-6">
+<div class="text-[10px] font-bold text-on-surface-variant uppercase mb-4 tracking-widest">Sector Concentration</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center text-xs">
+<span class="text-on-surface font-medium">Fitness &amp; Wellness</span>
+<div class="flex items-center gap-2">
+<div class="w-24 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-tertiary-container h-full w-[95%]"></div>
+</div>
+<span class="font-bold">95%</span>
+</div>
+</div>
+<div class="flex justify-between items-center text-xs">
+<span class="text-on-surface font-medium">Food &amp; Beverage</span>
+<div class="flex items-center gap-2">
+<div class="w-24 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-tertiary-container h-full w-[98%]"></div>
+</div>
+<span class="font-bold">98%</span>
+</div>
+</div>
+<div class="flex justify-between items-center text-xs">
+<span class="text-on-surface font-medium">Boutique Retail</span>
+<div class="flex items-center gap-2">
+<div class="w-24 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-tertiary-container h-full w-[88%]"></div>
+</div>
+<span class="font-bold">88%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Analysis Conclusion & CTA -->
+<div class="mt-12 bg-white rounded-lg p-8 shadow-[0_12px_40px_rgba(17,28,45,0.06)] flex flex-col md:flex-row justify-between items-center gap-8 border-l-4 border-secondary">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-secondary">verified_user</span>
+<h3 class="text-xl font-headline font-bold text-on-primary-fixed">Intelligence Recommendation</h3>
+</div>
+<p class="text-on-surface-variant text-sm max-w-2xl leading-relaxed">
+                        Based on the comparative gap analysis, <span class="text-secondary font-bold">Williamsburg</span> presents the highest ROI potential for <span class="font-bold">Boutique Retail</span> and <span class="font-bold">High-End Fitness</span>. Astoria remains stable for low-margin service sectors, while the Lower East Side has reached critical saturation across all major consumer segments.
+                    </p>
+</div>
+<div class="flex flex-col gap-3 w-full md:w-auto">
+<button class="gradient-cta text-white py-4 px-10 rounded-md font-bold text-sm tracking-wide shadow-xl active:opacity-90 transition-opacity">EXECUTE INVESTMENT DRILL-DOWN</button>
+<button class="bg-surface-container-low text-on-surface font-bold py-3 px-10 rounded-md text-sm hover:bg-surface-container-high transition-colors">REQUEST REFINED MODEL</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Map Control -->
+<div class="fixed bottom-8 right-8 flex flex-col gap-2 z-50">
+<div class="glass-panel bg-white/85 p-2 rounded-lg shadow-2xl flex flex-col gap-1">
+<button class="material-symbols-outlined p-2 text-on-surface hover:bg-slate-100 rounded-md transition-colors">add</button>
+<button class="material-symbols-outlined p-2 text-on-surface hover:bg-slate-100 rounded-md transition-colors">remove</button>
+<div class="h-[1px] bg-outline-variant/20 mx-1"></div>
+<button class="material-symbols-outlined p-2 text-on-surface hover:bg-slate-100 rounded-md transition-colors">my_location</button>
+<button class="material-symbols-outlined p-2 text-on-surface hover:bg-slate-100 rounded-md transition-colors">layers</button>
+</div>
+</div>
+</body></html>
