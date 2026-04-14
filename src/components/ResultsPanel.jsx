@@ -52,7 +52,7 @@ export default function ResultsPanel({
           </span>
         </div>
 
-        {/* Gap cards — staggered */}
+        {/* Gap cards, staggered */}
         {gaps.length > 0 ? (
           <motion.div
             variants={listVariants}

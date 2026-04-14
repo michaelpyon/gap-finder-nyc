@@ -8,7 +8,7 @@ export default function RadiusSelector({ radius, onChange, disabled }) {
           key={r}
           onClick={() => onChange(r)}
           disabled={disabled}
-          className={`px-3 py-1.5 text-xs font-medium rounded-full border transition-all duration-150
+          className={`px-3 py-1.5 min-h-[44px] text-xs font-medium rounded-full border transition-colors duration-150
             ${radius === r
               ? 'bg-accent/15 border-accent/40 text-accent'
               : 'bg-surface/90 border-border text-muted hover:text-text hover:border-border'

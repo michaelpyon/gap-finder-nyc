@@ -44,7 +44,7 @@ export default function HomePage() {
               className="px-6 py-3 bg-accent text-bg font-semibold text-sm rounded-xl
                 shadow-lg shadow-accent/25 hover:shadow-accent/40
                 hover:scale-[1.02] active:scale-[0.98]
-                transition-all duration-150"
+                transition-colors duration-150"
             >
               Analyze This Location
             </button>
