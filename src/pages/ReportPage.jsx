@@ -8,6 +8,7 @@ import { findNeighborhood } from '../data/neighborhoods'
 import ReportHeader from '../components/ReportHeader'
 import DemographicSnapshot from '../components/DemographicSnapshot'
 import GapRanking from '../components/GapRanking'
+import HeroGap from '../components/HeroGap'
 import CompetitiveMap from '../components/CompetitiveMap'
 import CategoryBreakdown from '../components/CategoryBreakdown'
 import LoadingState from '../components/LoadingState'
@@ -200,6 +201,15 @@ export default function ReportPage() {
           <div className="bg-surface border border-border rounded-xl p-6 text-center">
             <p className="text-sm text-muted">No residential population in this tract. This area may be commercial or industrial.</p>
           </div>
+        )}
+
+        {/* Hero opportunity: the single biggest gap, made shareable */}
+        {topGaps.length > 0 && (
+          <HeroGap
+            gap={topGaps[0]}
+            neighborhood={neighborhood}
+            onViewOnMap={handleViewOnMap}
+          />
         )}
 
         {/* Top Gaps */}
