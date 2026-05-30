@@ -9,6 +9,7 @@ import { getSaturationTier } from '../data/demandModel'
 import SaturationBar from '../components/SaturationBar'
 import LoadingState from '../components/LoadingState'
 import ErrorState from '../components/ErrorState'
+import DemoBanner from '../components/DemoBanner'
 
 function parseLocation(str) {
   if (!str) return null
@@ -200,6 +201,9 @@ export default function ComparePage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+        {/* Persistent demo disclosure */}
+        <DemoBanner className="mb-6" />
+
         {/* Desktop: side-by-side columns */}
         <div className="hidden sm:grid gap-6" style={{ gridTemplateColumns: `repeat(${results.length}, 1fr)` }}>
           {results.map((r, i) => (
@@ -300,7 +304,7 @@ export default function ComparePage() {
             How we calculate these scores
           </Link>
           <p className="text-[10px] text-muted/50">
-            Data: Census Bureau ACS 2022, OpenStreetMap
+            Illustrative sample data, not live Census or OpenStreetMap
           </p>
         </div>
       </div>

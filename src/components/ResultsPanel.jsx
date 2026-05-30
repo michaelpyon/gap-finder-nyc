@@ -93,7 +93,7 @@ export default function ResultsPanel({
 
         {/* Footer */}
         <p className="text-[10px] text-muted/50 text-center pb-4">
-          Data: Census Bureau ACS 2022, OpenStreetMap.
+          Illustrative sample data, not live Census or OpenStreetMap.
           Gap scores are estimates based on demographic benchmarks.
         </p>
       </div>

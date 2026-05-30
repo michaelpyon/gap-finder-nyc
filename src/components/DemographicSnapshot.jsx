@@ -27,20 +27,23 @@ export default function DemographicSnapshot({ demographics }) {
       {/* Age distribution bar chart */}
       <div className="bg-surface border border-border rounded-xl p-4">
         <p className="text-[10px] text-muted uppercase tracking-wider mb-3">Age Distribution</p>
-        <div className="flex items-end gap-2 h-24">
+        <div className="flex items-end gap-2 h-32">
           {ageDistribution.map((bracket, i) => {
             const heightPct = (bracket.count / maxAgeCount) * 100
             const pct = totalPopulation > 0 ? Math.round((bracket.count / totalPopulation) * 100) : 0
             return (
-              <div key={bracket.label} className="flex-1 flex flex-col items-center">
+              <div key={bracket.label} className="flex-1 h-full flex flex-col items-center justify-end">
                 <span className="text-[10px] font-mono text-muted mb-1">{pct}%</span>
-                <motion.div
-                  initial={{ height: 0 }}
-                  animate={{ height: `${Math.max(heightPct, 2)}%` }}
-                  transition={{ duration: 0.5, delay: i * 0.05, ease: [0.4, 0, 0.2, 1] }}
-                  className="w-full bg-accent/30 rounded-t"
-                  style={{ minHeight: '2px' }}
-                />
+                {/* Track fills the remaining column height so the bar can size against it */}
+                <div className="w-full flex-1 flex items-end">
+                  <motion.div
+                    initial={{ height: 0 }}
+                    animate={{ height: `${Math.max(heightPct, 3)}%` }}
+                    transition={{ duration: 0.5, delay: i * 0.05, ease: [0.4, 0, 0.2, 1] }}
+                    className="w-full bg-accent/40 rounded-t"
+                    style={{ minHeight: '3px' }}
+                  />
+                </div>
                 <span className="text-[10px] text-muted mt-1">{bracket.label}</span>
               </div>
             )

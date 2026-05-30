@@ -12,6 +12,7 @@ import CompetitiveMap from '../components/CompetitiveMap'
 import CategoryBreakdown from '../components/CategoryBreakdown'
 import LoadingState from '../components/LoadingState'
 import ErrorState from '../components/ErrorState'
+import DemoBanner from '../components/DemoBanner'
 
 export default function ReportPage() {
   const [searchParams] = useSearchParams()
@@ -164,6 +165,9 @@ export default function ReportPage() {
       </nav>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6 space-y-8">
+        {/* Persistent demo disclosure */}
+        <DemoBanner />
+
         {/* Partial failure banners */}
         {censusError && (
           <div className="bg-warning/10 border border-warning/30 rounded-lg px-4 py-3">
@@ -249,7 +253,7 @@ export default function ReportPage() {
             How we calculate these scores
           </Link>
           <p className="text-[10px] text-muted/50">
-            Data: Census Bureau ACS 2022, OpenStreetMap
+            Illustrative sample data, not live Census or OpenStreetMap
           </p>
         </div>
       </div>

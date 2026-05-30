@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 
 const MESSAGES = [
-  'Scanning nearby businesses...',
-  'Pulling Census data...',
+  'Loading sample businesses...',
+  'Loading sample demographics...',
   'Categorizing business types...',
   'Running gap analysis...',
   'Scoring opportunities...',

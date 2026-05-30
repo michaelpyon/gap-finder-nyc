@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import MapView from '../components/MapView'
 import SearchBar from '../components/SearchBar'
 import RadiusSelector from '../components/RadiusSelector'
+import DemoBanner from '../components/DemoBanner'
 
 export default function HomePage() {
   const [pin, setPin] = useState(null)
@@ -35,6 +36,11 @@ export default function HomePage() {
           onChange={setRadius}
           disabled={false}
         />
+
+        {/* Persistent demo disclosure */}
+        <div className="absolute top-3 left-1/2 -translate-x-1/2 z-20 w-[calc(100%-1.5rem)] max-w-md">
+          <DemoBanner className="bg-warning/15 backdrop-blur-sm shadow-lg" />
+        </div>
 
         {/* Analyze button */}
         {pin && (

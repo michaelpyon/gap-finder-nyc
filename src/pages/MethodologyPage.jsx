@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { DEMAND_CATEGORIES, SATURATION_TIERS, DISPLAY_CATEGORIES } from '../data/demandModel'
+import DemoBanner from '../components/DemoBanner'
 
 export default function MethodologyPage() {
   return (
@@ -25,6 +26,28 @@ export default function MethodologyPage() {
           </p>
         </div>
 
+        <DemoBanner />
+
+        {/* What the numbers in this demo actually are */}
+        <section className="space-y-3">
+          <h2 className="text-sm font-semibold text-text uppercase tracking-wider">About This Demo</h2>
+          <div className="bg-surface border border-border rounded-xl p-5 space-y-3 text-sm text-text/80 leading-relaxed">
+            <p>
+              This deployment runs on illustrative sample data. The population, income,
+              age, and business counts you see are hand-built estimates designed to show
+              how the tool works. They are not live measurements and should not drive a
+              real lease or business decision.
+            </p>
+            <p>
+              The codebase does include a real data path that reads U.S. Census ACS
+              5-Year estimates and queries OpenStreetMap through the Overpass API, but
+              that path is not active in this demo. Wiring it up for production is a
+              separate effort. The steps below describe how the model works on whatever
+              data it receives.
+            </p>
+          </div>
+        </section>
+
         {/* How it works */}
         <section className="space-y-3">
           <h2 className="text-sm font-semibold text-text uppercase tracking-wider">How it works</h2>
@@ -33,16 +56,18 @@ export default function MethodologyPage() {
               1. You drop a pin on the map and choose a radius (0.25, 0.5, or 1 mile).
             </p>
             <p>
-              2. We pull demographics from the Census Bureau ACS 5-Year estimates for all
-              census tracts that intersect your radius. Population, income, age, housing tenure.
+              2. The model takes demographics for the area: population, income, age, and
+              housing tenure. In this demo these are illustrative sample values. The real
+              data path is built to source them from Census Bureau ACS 5-Year estimates.
             </p>
             <p>
-              3. We query OpenStreetMap via the Overpass API for every commercial business
-              within your radius. Each business gets categorized into one of 20 categories.
+              3. The model takes a count of nearby commercial businesses, categorized into
+              one of 20 categories. In this demo these counts are sample values. The real
+              data path is built to query OpenStreetMap through the Overpass API.
             </p>
             <p>
               4. For each category, we calculate how many businesses the population "should" support
-              using a simple ratio: 1 coffee shop per 2,000 residents, 1 restaurant per 500, etc.
+              using a simple per-capita ratio: 1 coffee shop per 5,000 residents, 1 restaurant per 1,200, etc.
               Some categories also have a demographic filter (income, age, renter ratio).
             </p>
             <p>
@@ -121,27 +146,31 @@ export default function MethodologyPage() {
 
         {/* Data sources */}
         <section className="space-y-3">
-          <h2 className="text-sm font-semibold text-text uppercase tracking-wider">Data Sources</h2>
+          <h2 className="text-sm font-semibold text-text uppercase tracking-wider">Intended Data Sources</h2>
+          <p className="text-xs text-muted leading-relaxed">
+            These are the sources the real data path is built to use. They are not active
+            in this demo, which runs on illustrative sample data. Map rendering is live.
+          </p>
           <div className="space-y-2">
             {[
               {
-                name: 'U.S. Census Bureau ACS 5-Year (2022)',
-                desc: 'Population, income, age distribution, housing tenure. Updated annually. Free, no API key.',
+                name: 'U.S. Census Bureau ACS 5-Year',
+                desc: 'Intended source for population, income, age distribution, and housing tenure. Not active in this demo.',
                 url: 'https://www.census.gov/data/developers/data-sets/acs-5year.html',
               },
               {
                 name: 'FCC Area API',
-                desc: 'Converts lat/lng coordinates to Census FIPS codes (state, county, tract). Free, no API key.',
+                desc: 'Intended to convert lat/lng coordinates to Census FIPS codes (state, county, tract). Not active in this demo.',
                 url: 'https://geo.fcc.gov/api/census/',
               },
               {
                 name: 'OpenStreetMap / Overpass API',
-                desc: 'Business locations and types. Community-maintained. Coverage varies: dense in Manhattan, spottier in outer boroughs.',
+                desc: 'Intended source for business locations and types. Community-maintained, coverage varies by area. Not active in this demo.',
                 url: 'https://wiki.openstreetmap.org/wiki/Overpass_API',
               },
               {
                 name: 'Mapbox GL JS',
-                desc: 'Map rendering and geocoding.',
+                desc: 'Map rendering and geocoding. Live in this demo.',
                 url: 'https://www.mapbox.com/',
               },
             ].map(source => (
@@ -159,19 +188,19 @@ export default function MethodologyPage() {
           <ul className="space-y-2 text-sm text-text/80">
             <li className="flex items-start gap-2">
               <span className="text-warning mt-0.5 shrink-0">*</span>
-              <span>Census ACS5 data is annual (latest: 2022). Not real-time.</span>
+              <span>This demo uses illustrative sample data, not live measurements. Numbers are for demonstration only.</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-warning mt-0.5 shrink-0">*</span>
-              <span>Demand ratios are starting estimates, not empirically calibrated against actual NYC density.</span>
+              <span>Demand ratios are reasonable per-capita estimates, not empirically calibrated against actual NYC density.</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-warning mt-0.5 shrink-0">*</span>
-              <span>OpenStreetMap coverage varies. Some businesses may be missing, especially in less-mapped areas.</span>
+              <span>When the real data path is enabled, OpenStreetMap coverage varies and some businesses may be missing, especially in less-mapped areas.</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-warning mt-0.5 shrink-0">*</span>
-              <span>Population is estimated from the nearest census tract(s). In areas where the radius spans multiple tracts, this is approximate.</span>
+              <span>When the real data path is enabled, population is estimated from the nearest census tract(s). Where a radius spans multiple tracts, this is approximate.</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-warning mt-0.5 shrink-0">*</span>
@@ -183,7 +212,7 @@ export default function MethodologyPage() {
         {/* Footer */}
         <div className="border-t border-border pt-6 pb-8">
           <p className="text-[10px] text-muted/50 text-center">
-            Gap Finder NYC. Built with Census Bureau ACS, OpenStreetMap, and Mapbox.
+            Gap Finder NYC. Demo running on illustrative sample data. Map by Mapbox.
           </p>
         </div>
       </div>
