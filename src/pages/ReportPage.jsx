@@ -33,6 +33,7 @@ export default function ReportPage() {
   const [filterCategory, setFilterCategory] = useState(null)
   const [censusError, setCensusError] = useState(false)
   const [osmError, setOsmError] = useState(false)
+  const [copied, setCopied] = useState(false)
 
   const competitiveMapRef = useRef(null)
 
@@ -97,6 +98,23 @@ export default function ReportPage() {
     runAnalysis()
   }, [runAnalysis])
 
+  // Surface the headline gap in the browser tab and link-preview text.
+  // Falls back to the neighborhood, then a generic title, then restores
+  // the default on unmount so other routes are not left mislabeled.
+  useEffect(() => {
+    const topGap = topGaps[0]
+    if (topGap && neighborhood) {
+      document.title = `Gap Finder: ${neighborhood}, ${topGap.label}`
+    } else if (neighborhood) {
+      document.title = `Gap Finder: ${neighborhood}`
+    } else {
+      document.title = 'Gap Finder NYC: Find Underserved Business Gaps'
+    }
+    return () => {
+      document.title = 'Gap Finder NYC: Find Underserved Business Gaps'
+    }
+  }, [topGaps, neighborhood])
+
   const handleViewOnMap = useCallback((categoryId) => {
     setFilterCategory(categoryId)
     competitiveMapRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -114,10 +132,19 @@ export default function ReportPage() {
         await navigator.share({ title: `Gap Finder: ${neighborhood}`, url: shareUrl })
       } catch { /* user cancelled */ }
     } else {
-      await navigator.clipboard.writeText(shareUrl)
-      // Could add a toast here
+      try {
+        await navigator.clipboard.writeText(shareUrl)
+        setCopied(true)
+      } catch { /* clipboard blocked, leave silent */ }
     }
   }, [shareUrl, neighborhood])
+
+  // Auto dismiss the copied toast so it does not linger.
+  useEffect(() => {
+    if (!copied) return
+    const t = setTimeout(() => setCopied(false), 2000)
+    return () => clearTimeout(t)
+  }, [copied])
 
   if (loading) {
     return (
@@ -137,6 +164,24 @@ export default function ReportPage() {
 
   return (
     <div className="min-h-screen bg-bg">
+      {/* Copied confirmation toast for the clipboard share fallback */}
+      <AnimatePresence>
+        {copied && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 12 }}
+            transition={{ type: 'spring', stiffness: 320, damping: 28 }}
+            role="status"
+            aria-live="polite"
+            className="fixed bottom-6 left-1/2 z-[60] -translate-x-1/2 rounded-lg bg-text px-4 py-2
+              text-xs font-medium text-bg shadow-lg"
+          >
+            Link copied. Paste it anywhere to share this report.
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Top nav */}
       <nav className="sticky top-0 z-50 bg-bg/80 backdrop-blur-md border-b border-border">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">

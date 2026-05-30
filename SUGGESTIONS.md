@@ -2,6 +2,12 @@
 
 Last refreshed: 2026-05-30. Builds on the prior honesty and design pass (commit dd61014).
 
+## Shipped wave 2
+
+- Quick win 3, copied toast. The Share button's clipboard fallback was silent. It now shows a 2 second "Link copied. Paste it anywhere to share this report." toast and swallows clipboard errors instead of throwing. Maya now gets confirmation before pasting into a Reddit thread.
+- Quick win 4, headline gap in the document title. ReportPage now sets document.title to "Gap Finder: {neighborhood}, {topGap.label}" once analysis completes, falls back to the neighborhood then the default, and restores the default on unmount. Better browser tab and link-preview text when shared.
+- Both are additive, no deploy needed to verify the logic, build passes clean.
+
 ## The evangelist
 
 Maya, an aspiring first-time small-business owner in her early 30s who reads r/smallbusiness, r/Entrepreneur, and r/nyc, and lurks in local-business Discords. She is trying to decide where to open a coffee shop, laundromat, pilates studio, or daycare and has no money for a CoStar or Placer.ai subscription. Today she eyeballs Google Maps, counts competitors by hand, and asks Reddit "is Astoria saturated for coffee." What makes her screenshot Gap Finder is one punchy line she can paste into a thread: "Bed-Stuy has 2 laundromats where the population supports 12." That single sentence is the product. What makes her bounce in 5 seconds: a report that looks authoritative but turns out to be made up (she would feel tricked and never share it), a blank map because the Mapbox token is missing, or a wall of small ranked rows with no obvious headline takeaway.
@@ -29,9 +35,9 @@ Deploy status: the prior honesty fix was committed and pushed but never deployed
 
 2. Recolor the competitive map markers by opportunity. In `CompetitiveMap.jsx`, tint the radius fill and the gap callout using the top gap's `DISPLAY_CATEGORIES` color (already imported pattern exists in `GapRanking`). Why: visually ties the headline gap to the map. Effort S. Deploy to verify visually.
 
-3. Slug deep links and a copyable share string. `ReportPage.handleShare` already builds a `/report?lat=&lng=&r=` URL and `vercel.json` rewrites deep links to index.html. Add a small "Copied" toast on the clipboard fallback (currently silent, see the `// Could add a toast here` TODO at line 117). Why: Maya needs confidence the link copied before she pastes it into Reddit. Effort S. No deploy needed to verify.
+3. DONE WAVE 2. Copyable share string with a "Copied" toast. The clipboard fallback in `ReportPage.handleShare` is no longer silent.
 
-4. Show the headline gap in the document title. Set `document.title` to "Gap Finder: {neighborhood}, {topGap.label}" in `ReportPage` once analysis completes. Why: better browser tab and link-preview text when shared. Effort S. Deploy to verify.
+4. DONE WAVE 2. Headline gap in the document title via a `ReportPage` effect.
 
 ### Bigger bets
 
